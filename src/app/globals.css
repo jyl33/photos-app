@@ -67,3 +67,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: 'OfficeCodePro-Regular';
+  src: url('/OfficeCodePro-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Apply it globally */
+* {
+  font-family: 'OfficeCodePro-Regular', sans-serif;
+}
+
+/* Or apply it to body */
+body {
+  font-family: 'OfficeCodePro-Regular', sans-serif;
+}
+
+/* Apply it globally */
+* {
+  font-family: 'OfficeCodePro-Regular', sans-serif;
+}
+
+/* Or apply it to body */
+body {
+  font-family: 'OfficeCodePro-Regular', sans-serif;
+}
