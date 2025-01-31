@@ -75,6 +75,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'OfficeCodePro-Bold';
+  src: url('/OfficeCodePro-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* Apply it globally */
 * {
   font-family: 'OfficeCodePro-Regular', sans-serif;

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { fetchImages } from "@/lib/fetchImages"
-import { GetStaticProps } from 'next';
-import Image from 'next/image';
 import UploadButton from "@/components/ui/upload-button";
 import LayoutSwitcher from "@/components/ui/layout-switcher";
+import ImageRefreshListener from "@/components/imageRefreshListener";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,22 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="border-b">
-          <div className="flex h-16 items-center px-4 container mx-auto">
-            Photos App
-            <div className="ml-auto flex items-center space-x-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </div>
+      <ImageRefreshListener />
+        <div className="flex w-full justify-center items-center px-5 pt-5">
+          <div className="flex flex-col">
+          <div className="flex justify-between items-center pb-4 pt-3 border-b">
+            <LayoutSwitcher />
+            <p className="text-sm">photos</p>
+            <UploadButton />
+          </div>
+          {children}
           </div>
         </div>
-        <div className="flex space-between justify-between pt-4 pl-4 pr-4">
-              <LayoutSwitcher />
-              <UploadButton />
-            </div>
-            <div className="flex w-full justify-center items-center px-5 pt-5">{children}</div>
       </body>
     </html>
   );
