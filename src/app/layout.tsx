@@ -4,6 +4,8 @@ import "./globals.css";
 import UploadButton from "@/components/ui/upload-button";
 import LayoutSwitcher from "@/components/ui/layout-switcher";
 import ImageRefreshListener from "@/components/imageRefreshListener";
+import RefreshButton from "@/components/ui/refresh-button";
+import AuthButton from "@/components/ui/auth-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +23,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <ImageRefreshListener />
-        <div className="flex w-full justify-center items-center px-5 pt-5">
-          <div className="flex flex-col">
-          <div className="flex justify-between items-center pb-4 pt-3 border-b">
-            <LayoutSwitcher />
-            <p className="text-sm">photos</p>
-            <UploadButton />
+          <ImageRefreshListener />
+          <div className="flex w-full justify-center items-center px-5 pt-5">
+            <div className="flex flex-col">
+            <div className="flex justify-between items-center pb-4 pt-3">
+              <LayoutSwitcher />
+              <p className="text-sm">photos</p>
+              <div className="flex gap-2">
+                <AuthButton />
+                <UploadButton />
+                <RefreshButton />
+              </div>
+            </div>
+            {children}
+            </div>
           </div>
-          {children}
-          </div>
-        </div>
       </body>
     </html>
   );

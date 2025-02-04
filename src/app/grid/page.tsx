@@ -1,6 +1,6 @@
 import { CldImage } from "next-cloudinary";
 import cloudinary from "cloudinary";
-import { CloudinaryImage } from "./cloudinary-image";
+import { CloudinaryImage } from "@/components/ui/cloudinary-image";
 
 type SearchResult = {
   public_id: string;
@@ -13,7 +13,7 @@ export default async function GalleryPage() {
     .max_results(30)
     .execute()) as { resources: SearchResult[] };
 
-  console.log(results);
+  //console.log(results);
 
   return (
     <section>

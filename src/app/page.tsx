@@ -1,17 +1,5 @@
-import Image from "next/image";
-import {
-  CldUploadButton,
-  CldUploadWidget,
-  CldUploadButtonProps,
-  CldUploadWidgetProps,
-  CloudinaryUploadWidgetResults,
-} from "next-cloudinary";
-import { CldImage } from "next-cloudinary";
-import { classifyImage } from "../lib/classifyImage";
 import { fetchImages } from "@/lib/fetchImages";
-import { CloudinaryImage } from "./grid/cloudinary-image";
-import { format } from "path";
-import { metadata } from "./layout";
+import { CloudinaryImage } from "../components/ui/cloudinary-image";
 import type { SearchResult } from "@/lib/fetchImages";
 
 export const dynamic = 'force-dynamic';
@@ -73,7 +61,7 @@ const HomePage = async () => {
   console.log('Page rendered');
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-4">
       {images.resources.map((result: SearchResult) => {
       const exifData = typeof result.metadata?.exif_data === 'string' 
         ? JSON.parse(result.metadata.exif_data)

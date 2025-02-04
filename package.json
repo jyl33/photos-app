@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.34.2",
+    "@hookform/resolvers": "^3.10.0",
+    "@prisma/client": "^6.3.0",
     "@radix-ui/react-avatar": "^1.1.0",
-    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "better-auth": "^1.1.15",
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.5.0",
     "clsx": "^2.1.1",
@@ -19,28 +24,49 @@
     "lucide-react": "^0.436.0",
     "n": "^10.1.0",
     "next": "^15.1.6",
+    "next-auth": "^5.0.0-beta.25",
     "next-cloudinary": "^6.10.1",
+    "pg": "^8.13.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.54.2",
     "stable": "^0.1.8",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "toast": "^0.5.4"
+    "toast": "^0.5.4",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@gradio/client": "^1.8.0",
-    "@types/node": "^20",
+    "@types/node": "^20.17.16",
+    "@types/pg": "^8.11.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "postcss": "^8",
+    "prisma": "^6.3.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   },
   "browser": {
     "fs": false,
     "path": false,
     "os": false
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyl33/photos-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jyl33/photos-app/issues"
+  },
+  "homepage": "https://github.com/jyl33/photos-app#readme"
 }

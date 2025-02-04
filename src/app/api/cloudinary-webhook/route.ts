@@ -131,13 +131,22 @@ export async function POST(request: Request) {
 export async function GET() {
   const stream = new ReadableStream({
     start(controller) {
+      // Add client with timestamp
       clients.add(controller);
-      logClientStatus();
+      
+      // Set up automatic cleanup after 1 hour
+      setTimeout(() => {
+        clients.delete(controller);
+        controller.close();
+      }, 3600000);
     },
-    cancel(controller) {
-      clients.delete(controller);
-      console.log('Client disconnected');
-      logClientStatus();
+    cancel() {
+      // Remove client when stream closes
+      for (const client of clients) {
+        if (client.desiredSize === null) {
+          clients.delete(client);
+        }
+      }
     },
   });
 

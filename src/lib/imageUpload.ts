@@ -23,9 +23,8 @@ export async function getClassificationData(imageUrl: string) {
 
     return {
       classification: mainLabel,
-      confidence: topConfidence,
-      classified_at: new Date().toISOString()
-    };
+      confidence: topConfidence
+   };
   } catch (error) {
     console.error('Classification error:', error);
     return {
