@@ -16,7 +16,7 @@ export default function AuthButton() {
   return (
     <Button 
       variant="outline" 
-      onClick={(_e) => { router.push('/login'); }}
+      onClick={(_e) => { router.push('/sign-in'); }}
     >
       <ScanFace className="h-5 w-5 scan-face"/>
     </Button>

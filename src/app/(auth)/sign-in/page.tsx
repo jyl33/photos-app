@@ -7,14 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { signInSchema } from "@/lib/auth-schema"
+import { signInFormSchema } from "@/lib/auth-schema"
  
 
 export default function SignIn() {
 
     // 1. Define your form.
-    const form = useForm<z.infer<typeof signInSchema>>({
-        resolver: zodResolver(signInSchema),
+    const form = useForm<z.infer<typeof signInFormSchema>>({
+        resolver: zodResolver(signInFormSchema),
         defaultValues: {
         email: "",
         password: "",
@@ -22,7 +22,7 @@ export default function SignIn() {
     })
     
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof signInSchema>) {
+    function onSubmit(values: z.infer<typeof signInFormSchema>) {
         console.log(values)
     }
 

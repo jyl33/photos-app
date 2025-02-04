@@ -6,6 +6,8 @@ import LayoutSwitcher from "@/components/ui/layout-switcher";
 import ImageRefreshListener from "@/components/imageRefreshListener";
 import RefreshButton from "@/components/ui/refresh-button";
 import AuthButton from "@/components/ui/auth-button";
+import { Toaster } from "@/components/ui/toaster";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +40,7 @@ export default function RootLayout({
             {children}
             </div>
           </div>
+          <Toaster />
       </body>
     </html>
   );
