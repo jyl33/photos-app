@@ -8,10 +8,13 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { signInFormSchema } from "@/lib/auth-schema"
+import { authClient } from "@/lib/auth-client";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
  
 
 export default function SignIn() {
-
+    const router = useRouter();
     // 1. Define your form.
     const form = useForm<z.infer<typeof signInFormSchema>>({
         resolver: zodResolver(signInFormSchema),
@@ -21,9 +24,32 @@ export default function SignIn() {
         },
     })
     
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof signInFormSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof signInFormSchema>) {
+        const { email, password } = values;
+        const { data, error } = await authClient.signIn.email({
+            email,
+            password,
+        }, {
+            onRequest: () => {
+            toast({
+                title: "Please wait...",
+            })
+            },
+            onSuccess: () => {
+                form.reset()
+                toast({
+                    title: "Successfully Signed In",
+                })
+                router.push("/");
+            },
+            onError: (ctx) => {
+                toast({ title: ctx.error.message, variant: 'destructive' });
+                form.setError('email', {
+                    type: 'manual',
+                    message: ctx.error.message
+                })
+            },
+        });
     }
 
     return (

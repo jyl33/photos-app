@@ -1,6 +1,8 @@
 import { fetchImages } from "@/lib/fetchImages";
 import { CloudinaryImage } from "../components/ui/cloudinary-image";
 import type { SearchResult } from "@/lib/fetchImages";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -60,6 +62,14 @@ const HomePage = async () => {
   const images = await fetchImages();
   console.log('Page rendered');
 
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+
+  const user = session?.user
+
+  console.log("Current session:", session);
+  console.log("Current user:", user);
   return (
     <div className="flex flex-col gap-4 pb-4">
       {images.resources.map((result: SearchResult) => {

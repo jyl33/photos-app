@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import UploadButton from "@/components/ui/upload-button";
-import LayoutSwitcher from "@/components/ui/layout-switcher";
 import ImageRefreshListener from "@/components/imageRefreshListener";
-import RefreshButton from "@/components/ui/refresh-button";
-import AuthButton from "@/components/ui/auth-button";
 import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/ui/navbar";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +14,8 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -28,15 +26,7 @@ export default function RootLayout({
           <ImageRefreshListener />
           <div className="flex w-full justify-center items-center px-5 pt-5">
             <div className="flex flex-col">
-            <div className="flex justify-between items-center pb-4 pt-3">
-              <LayoutSwitcher />
-              <p className="text-sm">photos</p>
-              <div className="flex gap-2">
-                <AuthButton />
-                <UploadButton />
-                <RefreshButton />
-              </div>
-            </div>
+            <Navbar />
             {children}
             </div>
           </div>
