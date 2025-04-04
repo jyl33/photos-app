@@ -1,0 +1,48 @@
+'use client';
+
+import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
+import AuthButton from "@/components/ui/auth-button";
+import LayoutSwitcher from "@/components/ui/layout-switcher";
+import UploadButton from "@/components/ui/upload-button";
+import RefreshButton from "@/components/ui/refresh-button";
+import { LogOut } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+
+const Navbar = () => {
+    const { data: session } = authClient.useSession();
+
+    const handleSignOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    toast({
+                        title: "Signed out successfully",
+                    });
+                },
+                onError: (error) => {
+                    toast({
+                        title: "Error signing out",
+                        variant: "destructive",
+                    });
+                }
+            }
+        });
+        
+    };
+
+    return (
+        <div className="flex justify-between items-center pb-4 pt-3 h-[60px]">
+            <LayoutSwitcher /> 
+            <a href="/" className="text-sm">photos</a>
+            { session ? <p className="text-sm">welcome, {session.user?.name}</p> : null}
+            <div className="flex gap-2">
+            { session ? <Button className="h-[30px]" title="Sign Out" variant="outline" onClick={ handleSignOut }><LogOut className="w-4 h-4" /></Button> : null}
+            { session ? <UploadButton /> : null}
+            <RefreshButton />
+            </div>
+        </div>
+    )
+}
+
+export default Navbar;

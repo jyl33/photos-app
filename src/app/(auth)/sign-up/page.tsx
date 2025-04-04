@@ -34,11 +34,6 @@ export default function SignUp() {
             name,
             callbackURL: "/sign-in",
         }, {
-            onRequest: () => {
-            toast({
-                title: "Please wait...",
-            })
-            },
             onSuccess: () => {
                 form.reset()
                 toast({
@@ -47,7 +42,6 @@ export default function SignUp() {
                 router.push("/sign-in");
             },
             onError: (ctx) => {
-                toast({ title: ctx.error.message, variant: 'destructive' });
                 form.setError('email', {
                     type: 'manual',
                     message: ctx.error.message
@@ -105,7 +99,7 @@ export default function SignUp() {
                                 </FormItem>
                             )}
                         />
-            <Button className="w-full" type="submit">Submit</Button>
+            <Button className="w-full" type="submit">Sign Up</Button>
         </form>
         </Form>
             </CardContent>

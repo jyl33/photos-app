@@ -9,7 +9,9 @@ export default function RefreshButton() {
   
   return (
     <Button 
+      className="h-[30px]"
       variant="outline" 
+      title="Refresh"
       onClick={(e) => {
         const icon = e.currentTarget.querySelector('.refresh-icon') as HTMLElement;
         if (icon) {

@@ -12,5 +12,6 @@ export const auth = betterAuth({
     emailAndPassword: {  
         enabled: true
     },
+    trustedOrigins: ["http://localhost:3000", "https://7cd2-173-56-32-144.ngrok-free.app"],
     plugins: [nextCookies()] 
 });

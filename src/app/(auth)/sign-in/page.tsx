@@ -11,11 +11,12 @@ import { signInFormSchema } from "@/lib/auth-schema"
 import { authClient } from "@/lib/auth-client";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
  
 
 export default function SignIn() {
     const router = useRouter();
-    // 1. Define your form.
+
     const form = useForm<z.infer<typeof signInFormSchema>>({
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
@@ -30,20 +31,13 @@ export default function SignIn() {
             email,
             password,
         }, {
-            onRequest: () => {
-            toast({
-                title: "Please wait...",
-            })
-            },
             onSuccess: () => {
-                form.reset()
                 toast({
                     title: "Successfully Signed In",
                 })
                 router.push("/");
             },
             onError: (ctx) => {
-                toast({ title: ctx.error.message, variant: 'destructive' });
                 form.setError('email', {
                     type: 'manual',
                     message: ctx.error.message
@@ -53,8 +47,7 @@ export default function SignIn() {
     }
 
     return (
-        <div>
-        <Card className="w-full max-w-md mx-auto">
+        <Card className="w-[90%] md:w-[300px] lg:w-[400px] mx-auto">
             <CardHeader>
                 <CardTitle>Sign In</CardTitle>
             </CardHeader>
@@ -68,7 +61,7 @@ export default function SignIn() {
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="email" {...field} />
+                                    <Input placeholder="Enter your email" {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
@@ -87,11 +80,18 @@ export default function SignIn() {
                                 </FormItem>
                             )}
                         />
-            <Button className="w-full" type="submit">Submit</Button>
+            <Button className="w-full" type="submit">Sign In</Button>
         </form>
         </Form>
             </CardContent>
+            <CardFooter className='flex justify-center'>
+                <p className='text-sm text-muted-foreground'>
+                    Not an Admin? {' '}
+                <Link href='/' className='text-primary hover:underline'>
+                    Go Home
+                </Link>
+                </p>
+            </CardFooter>
         </Card>
-        </div>
     )
 }

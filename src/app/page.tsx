@@ -3,6 +3,8 @@ import { CloudinaryImage } from "../components/ui/cloudinary-image";
 import type { SearchResult } from "@/lib/fetchImages";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -12,44 +14,32 @@ function capitalizeFirstLetter(str?: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function calculateShutterSpeed(exposureTime: string) {
+  return 1/Number(exposureTime);
+}
+
 function formatDate(dateStr: string) {
   if (!dateStr) {
-    return "N/A";
+    return "";
   }
 
   try {
-    // Handle different date formats by normalizing separators
-    const normalizedDateStr = dateStr.replace(/[-:\/]/g, ':');
+    // For ISO strings, we can directly use the Date constructor
+    const date = new Date(dateStr);
     
-    // Split into date and time parts
-    const [date, time] = normalizedDateStr.split(' ');
-    if (!date) return 'N/A';
-    
-    // Parse the date parts
-    const [year, month, day] = date.split(':').map(Number);
-    
-    // Handle time if present
-    let hours = 0, minutes = 0;
-    if (time) {
-      const timeParts = time.split(':').map(Number);
-      hours = timeParts[0] || 0;
-      minutes = timeParts[1] || 0;
-    }
-    
-    // Validate date parts
-    if (!year || !month || !day || isNaN(year) || isNaN(month) || isNaN(day)) {
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
       return 'N/A';
     }
     
-    // Create date string in a consistent format
     const formattedDate = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: time ? 'numeric' : undefined,
-      minute: time ? '2-digit' : undefined,
+      hour: 'numeric',
+      minute: '2-digit',
       hour12: true,
-    }).format(new Date(year, month - 1, day, hours, minutes));
+    }).format(date);
 
     return formattedDate;
   } catch (error) {
@@ -70,43 +60,53 @@ const HomePage = async () => {
 
   console.log("Current session:", session);
   console.log("Current user:", user);
-  return (
-    <div className="flex flex-col gap-4 pb-4">
-      {images.resources.map((result: SearchResult) => {
-      const exifData = typeof result.metadata?.exif_data === 'string' 
-        ? JSON.parse(result.metadata.exif_data)
-        : result.metadata?.exif_data;
 
-        return (
-          <div key={result.public_id} className="flex flex-row gap-4 items-start pr-3.5 border border-black">
-            <div className="flex-shrink-0 border-r border-black">
-              <CloudinaryImage
-                src={result.public_id}
-                alt="an image of something"
-                width="1000"
-                height="500"
-              />
-            </div>
-            <div className="flex flex-col space-y-2 max-w-56 pt-2">
-              <p  className="font-bold text-lg" style={{ fontFamily: 'OfficeCodePro-Bold' }}>{result.metadata?.title}</p>
-              <div className="text-xs space-y-1">
-                <p>{formatDate(exifData?.dateTime.toString())}</p>
-                <p>{exifData?.cameraMake} {exifData?.cameraModel}</p>
-                <p>{exifData?.shutterSpeed} <br /> {exifData?.aperture} <br /> ISO {exifData?.ISO}</p>
-                <p>{exifData?.lensMake} {exifData?.lensModel}</p>
-                <p className="mt-2">
-                  <br />
-                  {capitalizeFirstLetter(result.metadata?.classification)} {result.metadata?.confidence}% Confident
-                  <br/><br/>
-                  {result.metadata?.description}
-                </p>
+
+  return (
+    <div>
+      <Navbar />
+      <div className="flex flex-col gap-4">
+        {images.resources.map((result: SearchResult) => {
+          const exifData = typeof result.metadata?.exif_data === 'string' 
+            ? JSON.parse(result.metadata.exif_data)
+            : result.metadata?.exif_data;
+  
+          return (
+            <div 
+              key={result.public_id} 
+              data-image-id={result.public_id} 
+              className="flex flex-row gap-4 items-start border border-black box-border opacity-0 transition-opacity duration-1000 ease-in-out"
+            >
+              <div className="flex-shrink-0 border-r border-black box-border">
+                <CloudinaryImage
+                  src={result.public_id}
+                  alt="an image of something"
+                  width={1024}
+                  height={576}
+                  loading="eager"
+                />
+              </div>
+              <div className="flex flex-col space-y-2 max-w-56 pt-2">
+                <p className="font-bold text-lg" style={{ fontFamily: 'OfficeCodePro-Bold' }}>{result.metadata?.title ? result.metadata?.title : "Loading Metadata..."}</p>
+                <div className="text-xs space-y-1">
+                  <p>{formatDate(exifData?.dateTime.toString())}</p>
+                  <p>{exifData?.cameraMake} {exifData?.cameraModel}</p>
+                  <p>{exifData?.shutterSpeed ? `1/${calculateShutterSpeed(exifData?.shutterSpeed)}` : null} <br /> {exifData?.aperture ? `f/${exifData?.aperture}`: null} <br /> {exifData?.ISO ? `ISO ${exifData?.ISO}` : null}</p>
+                  <p>{exifData?.lensMake} {exifData?.lensModel}</p>
+                  <p className="mt-2">
+                    <br />
+                   { result.metadata?.classification ? `${capitalizeFirstLetter(result.metadata?.classification)} ${result.metadata?.confidence}% Confident` : null}
+                    <br/><br/>
+                    {result.metadata?.description}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+        <Footer />
+      </div>
     </div>
-  );
-};
+  );};
 
 export default HomePage;

@@ -1,6 +1,8 @@
 "use server"
 
 import ExifReader from 'exifreader';
+import exifr from 'exifr' 
+import { PhoneOff } from 'lucide-react';
 
 interface PhotoMetadata {
     dateTime: string;
@@ -15,21 +17,30 @@ interface PhotoMetadata {
 }
 
 export async function getExifData(imageURL: string, publicID: string) {
-    console.time('getExifData');
     try {
-        const tags = await ExifReader.load(imageURL);
+
+        console.log("Getting EXIF data");
+
+        console.log(imageURL);
+
+        let output = await exifr.parse(imageURL);
+        console.log('output', output);
+
+        //console.log("tags", tags);
         
-        const photoMetadata: PhotoMetadata = {
-            dateTime: tags['DateTimeOriginal']?.description ?? "",
-            cameraMake: tags['Make']?.description ?? "",
-            cameraModel: tags['Model']?.description ?? "",
-            shutterSpeed: tags['ExposureTime']?.description ?? tags['ShutterSpeedValue']?.description ?? "",
-            aperture: tags['FNumber']?.description ?? tags['ApertureValue']?.description ?? "",
-            ISO: tags['ISOSpeedRatings']?.description ?? "",
-            focalLength: tags['FocalLength']?.description ?? "",
-            lensMake: tags['LensMake']?.description ?? "",
-            lensModel: tags['LensModel']?.description ?? tags['Lens']?.description ?? ""
+       const photoMetadata: PhotoMetadata = {
+            dateTime: output.DateTimeOriginal ?? "",
+            cameraMake: output.Make ?? "",
+            cameraModel: output.Model ?? "",
+            shutterSpeed: output.ExposureTime ?? output.ShutterSpeedValue ?? "",
+            aperture: output.FNumber ?? output.ApertureValue ?? "",
+            ISO: output.ISO ?? "",
+            focalLength: output.FocalLength ?? "",
+            lensMake: output.LensMake ?? "",
+            lensModel: output.LensModel ?? ""
         };
+
+        console.log("Exif data", photoMetadata);
 
         // Instead of updating Cloudinary directly, return the data
         return {
@@ -41,7 +52,5 @@ export async function getExifData(imageURL: string, publicID: string) {
         return {
             exif_data: JSON.stringify({})
         };
-    } finally {
-        console.timeEnd('getExifData');
-    }
+    } 
 }

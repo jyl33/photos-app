@@ -92,12 +92,15 @@ body {
   font-family: 'OfficeCodePro-Regular', sans-serif;
 }
 
-/* Apply it globally */
-* {
-  font-family: 'OfficeCodePro-Regular', sans-serif;
+html {
+  overflow-y: scroll !important;
 }
 
-/* Or apply it to body */
-body {
-  font-family: 'OfficeCodePro-Regular', sans-serif;
+@keyframes shimmer {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
