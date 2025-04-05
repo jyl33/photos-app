@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-//import ImageRefreshListener from "@/components/imageRefreshListener";
 import { Toaster } from "@/components/ui/toaster";
 
 
@@ -20,7 +19,6 @@ export default async function RootLayout({
   return (
     <html lang="en" >
       <body className={`${inter.className}`}>
-         {/* <ImageRefreshListener /> */}
             <div className="flex w-full justify-center pt-5 min-h-screen">
               <div className="flex flex-col w-full max-w-7xl mx-auto">
                 {children}
