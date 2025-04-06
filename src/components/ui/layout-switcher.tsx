@@ -15,6 +15,7 @@ export default function LayoutSwitcher() {
               : "text-gray-400 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-400"
           }`}
           href="/"
+          title="gallery"
         >
           <div className="w-7 h-6 flex items-center justify-center">
             <GalleryVertical size={18} />
@@ -27,6 +28,7 @@ export default function LayoutSwitcher() {
               : "text-gray-400 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-400"
           }`}
           href="/grid"
+          title="grid"
         >
           <div className="w-7 h-6 flex items-center justify-center">
             <LayoutGrid size={18} />

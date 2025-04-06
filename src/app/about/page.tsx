@@ -1,14 +1,15 @@
 import Footer from "@/components/footer";
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { Github, Linkedin, Instagram, ChevronLeft } from "lucide-react";
 
 const AboutPage = () => {
   return (
     <div className="flex flex-col md:flex-row">
       <div className="container mx-auto px-4 py-8 md:w-4/5 text-[#697282]">
-        <Link href="/" className="text-blue-500 hover:underline text-sm">
-          Back to Homepage
+        <Link href="/" className="text-blue-500 hover:underline text-sm flex items-center gap-1">
+            <ChevronLeft size={16} />
+            <span>Back to Homepage</span>
         </Link>
         <h1 className="text-3xl font-bold mb-4 pt-3 text-black">About</h1>
         <p className="mb-4">
