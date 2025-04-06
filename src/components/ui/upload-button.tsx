@@ -15,7 +15,7 @@ export default function UploadButton() {
       <Button className="h-[30px]" variant="outline" title="Upload" asChild>
         <CldUploadButton
           uploadPreset="piep2kdj"
-          options={{ maxFiles: 1, maxFileSize: 10000000 }}
+          //options={{ maxFiles: 10, maxFileSize: 10000000 }}
           onQueuesStart = {() => {
             console.log("Upload started");
           }}

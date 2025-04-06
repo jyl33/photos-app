@@ -14,26 +14,26 @@ export default async function GalleryPage() {
     .max_results(30)
     .execute()) as { resources: SearchResult[] };
 
-  
-
   return (
     <div>
       <Navbar />
-      <div className="grid grid-cols-3 gap-4">
-        {results.resources.map((result) => (
-          <div key={result.public_id} 
-               data-image-id={result.public_id} 
-               className="opacity-0 transition-opacity duration-1000 ease-in-out">
-            <CloudinaryImage
-              className="w-full h-full object-cover border border-black box-border"
-              src={result.public_id}
-              alt="an image of something"
-              width={400}
-              height={300}
-              loading="eager"
-            />
-          </div>
-        ))}
+      <div className="p-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {results.resources.map((result) => (
+            <div key={result.public_id} 
+                data-image-id={result.public_id} 
+                className="opacity-0 transition-opacity duration-1000 ease-in-out">
+              <CloudinaryImage
+                className="w-full h-full object-cover border border-black box-border"
+                src={result.public_id}
+                alt="an image of something"
+                width={400}
+                height={300}
+                loading="eager"
+              />
+            </div>
+          ))}
+        </div>
       </div>
       <Footer />
     </div>

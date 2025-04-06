@@ -7,7 +7,10 @@ import LayoutSwitcher from "@/components/ui/layout-switcher";
 import UploadButton from "@/components/ui/upload-button";
 import RefreshButton from "@/components/ui/refresh-button";
 import { LogOut } from "lucide-react";
+import { Info } from "lucide-react"
 import { toast } from "@/hooks/use-toast";
+import AboutButton from "./ui/about-button";
+import AboutButtonNav from "./ui/about-button-nav";
 
 const Navbar = () => {
     const { data: session } = authClient.useSession();
@@ -32,14 +35,14 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex justify-between items-center pb-4 pt-3 h-[60px]">
+        <div className="flex justify-between items-center pb-4 pt-3 h-[60px] px-2 md:px-2">
             <LayoutSwitcher /> 
-            <a href="/" className="text-sm">photos</a>
-            { session ? <p className="text-sm">welcome, {session.user?.name}</p> : null}
+            <a href="/" className="text-sm">📸 photos</a>
+            { session ? <p className="text-sm hidden md:block">welcome, {session.user?.name}</p> : null}
             <div className="flex gap-2">
             { session ? <Button className="h-[30px]" title="Sign Out" variant="outline" onClick={ handleSignOut }><LogOut className="w-4 h-4" /></Button> : null}
             { session ? <UploadButton /> : null}
-            <RefreshButton />
+            { session ? <RefreshButton />: <AboutButtonNav/> }
             </div>
         </div>
     )

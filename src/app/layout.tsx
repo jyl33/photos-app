@@ -19,14 +19,16 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" >
-      <body className={`${inter.className}`}>
-            <div className="flex w-full justify-center pt-5 min-h-screen">
-              <div className="flex flex-col w-full max-w-7xl mx-auto">
-                {children}
-              </div>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <div className="flex-grow">
+          <div className="flex w-full justify-center pt-5 min-h-screen">
+            <div className="flex flex-col w-full max-w-7xl mx-auto">
+              {children}
             </div>
-          <Toaster />
-          <SpeedInsights/>
+          </div>
+        </div>
+        <Toaster />
+        <SpeedInsights/>
       </body>
     </html>
   );

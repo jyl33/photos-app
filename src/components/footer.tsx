@@ -8,7 +8,7 @@ const Footer = () => {
     const { data: session } = authClient.useSession();
 
     return (
-        <div className="flex justify-between items-center pb-4 pt-3">
+        <div className="flex justify-between items-center pb-4 pt-2 px-3">
               <div className="flex gap-2">
                 { session ? null : <AuthButton />}
               </div>

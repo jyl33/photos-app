@@ -35,10 +35,7 @@ function formatDate(dateStr: string) {
     const formattedDate = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
+      day: 'numeric'
     }).format(date);
 
     return formattedDate;
@@ -65,7 +62,7 @@ const HomePage = async () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 p-2 md:p-2">
         {images.resources.map((result: SearchResult) => {
           const exifData = typeof result.metadata?.exif_data === 'string' 
             ? JSON.parse(result.metadata.exif_data)
@@ -75,27 +72,37 @@ const HomePage = async () => {
             <div 
               key={result.public_id} 
               data-image-id={result.public_id} 
-              className="flex flex-row gap-4 items-start border border-black box-border opacity-0 transition-opacity duration-1000 ease-in-out"
+              className="flex flex-col md:flex-row items-start border border-black box-border opacity-0 transition-opacity duration-1000 ease-in-out"
             >
-              <div className="flex-shrink-0 border-r border-black box-border">
+              {/* Image container - shrinks with viewport but metadata size is preserved */}
+              <div className="w-full md:flex-1 md:border-r md:border-black box-border">
                 <CloudinaryImage
                   src={result.public_id}
                   alt="an image of something"
                   width={1024}
                   height={576}
                   loading="eager"
+                  className="w-full h-auto"
                 />
               </div>
-              <div className="flex flex-col space-y-2 max-w-56 pt-2">
-                <p className="font-bold text-lg" style={{ fontFamily: 'OfficeCodePro-Bold' }}>{result.metadata?.title ? result.metadata?.title : "Loading Metadata..."}</p>
-                <div className="text-xs space-y-1">
-                  <p>{formatDate(exifData?.dateTime.toString())}</p>
+              
+              {/* Metadata container - fixed width on desktop */}
+              <div className="flex flex-col space-y-2 w-full md:w-56 flex-shrink-0 px-4 py-4 md:px-4 md:pt-2 md:pb-0">
+                <p className="font-bold text-md" style={{ fontFamily: 'OfficeCodePro-Bold' }}>
+                  {result.metadata?.title ? result.metadata?.title : "Loading Metadata..."}
+                </p>
+                <div className="text-xs space-y-1 text-[#697282]">
+                  <p>{formatDate(exifData?.dateTime?.toString())}</p>
                   <p>{exifData?.cameraMake} {exifData?.cameraModel}</p>
-                  <p>{exifData?.shutterSpeed ? `1/${calculateShutterSpeed(exifData?.shutterSpeed)}` : null} <br /> {exifData?.aperture ? `f/${exifData?.aperture}`: null} <br /> {exifData?.ISO ? `ISO ${exifData?.ISO}` : null}</p>
+                  <p>
+                    {exifData?.shutterSpeed ? `1/${calculateShutterSpeed(exifData?.shutterSpeed)}` : null} <br /> 
+                    {exifData?.aperture ? `f/${exifData?.aperture}`: null} <br /> 
+                    {exifData?.ISO ? `ISO ${exifData?.ISO}` : null}
+                  </p>
                   <p>{exifData?.lensMake} {exifData?.lensModel}</p>
                   <p className="mt-2">
                     <br />
-                   { result.metadata?.classification ? `${capitalizeFirstLetter(result.metadata?.classification)} ${result.metadata?.confidence}% Confident` : null}
+                    {result.metadata?.classification ? `${capitalizeFirstLetter(result.metadata?.classification)} ${result.metadata?.confidence}% Confident` : null}
                     <br/><br/>
                     {result.metadata?.description}
                   </p>
@@ -107,6 +114,7 @@ const HomePage = async () => {
         <Footer />
       </div>
     </div>
-  );};
+  );
+};
 
 export default HomePage;
