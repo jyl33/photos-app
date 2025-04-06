@@ -37,8 +37,8 @@ const Navbar = () => {
     return (
         <div className="flex justify-between items-center pb-4 pt-3 h-[60px] px-2 md:px-2">
             <LayoutSwitcher /> 
-            <a href="/" className="text-sm">📸 photos</a>
-            { session ? <p className="text-sm hidden md:block">welcome, {session.user?.name}</p> : null}
+            <a href="/" className="text-md">📸 photos</a>
+            { session ? <p className="text-md hidden md:block">welcome, {session.user?.name}</p> : null}
             <div className="flex gap-2">
             { session ? <Button className="h-[30px]" title="Sign Out" variant="outline" onClick={ handleSignOut }><LogOut className="w-4 h-4" /></Button> : null}
             { session ? <UploadButton /> : null}
