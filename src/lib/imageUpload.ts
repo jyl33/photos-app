@@ -88,7 +88,7 @@ export async function getTitleData(imageUrl: string) {
     
     const client = await Client.connect("justinwiley/photoNamer");
 
-    const result = await client.predict("/predict", { 
+    const result = await client.predict("/describe_image", { 
       image: imageBlob, 
     });
 
