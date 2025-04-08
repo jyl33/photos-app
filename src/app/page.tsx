@@ -15,7 +15,7 @@ function capitalizeFirstLetter(str?: string) {
 }
 
 function calculateShutterSpeed(exposureTime: string) {
-  return 1/Number(exposureTime);
+  return Math.round(1/Number(exposureTime));
 }
 
 function formatDate(dateStr: string) {
