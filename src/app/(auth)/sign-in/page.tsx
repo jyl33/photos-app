@@ -88,7 +88,7 @@ export default function SignIn() {
                 <p className='text-sm text-muted-foreground'>
                     Not an Admin? {' '}
                 <Link href='/' className='text-primary hover:underline'>
-                    Go Home
+                    Scram!
                 </Link>
                 </p>
             </CardFooter>
