@@ -13,7 +13,7 @@ Prerequisites:
 * Supabase project
 
 1. Clone the github repo
-2. Install Cloudinary, BetterAuth, Supabase
+2. Install Cloudinary, BetterAuth, Supabase and Prisma
 3. In the .env.template file, find and add these values:
    
    * NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
